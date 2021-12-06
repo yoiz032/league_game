@@ -27,13 +27,15 @@ class _State extends State<LoginScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "LEAGUE GAMES",
-              style: Theme.of(context).textTheme.headline1,
-            ),
+        children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            child: const Text("LEAGUE GAMES",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 50.0,
+                    color: Color(0xFFFF3A3A),
+                    fontWeight: FontWeight.bold)),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

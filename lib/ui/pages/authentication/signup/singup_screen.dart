@@ -23,19 +23,28 @@ class _State extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(6.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            alignment: Alignment.center,
+            child: const Text("LEAGUE GAMES",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 47.0,
+                    color: Color(0xFFFF3A3A),
+                    fontWeight: FontWeight.bold)),
+          ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: Text(
               "Creación de usuario",
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: TextField(
               key: const Key("signUpName"),
               controller: nameController,
@@ -46,7 +55,7 @@ class _State extends State<SignUpScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: TextField(
               key: const Key("signUpEmail"),
               controller: emailController,
@@ -57,7 +66,7 @@ class _State extends State<SignUpScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: TextField(
               key: const Key("signUpPassword"),
               controller: passwordController,
