@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:league_game/data/repositories/auth.dart';
+import 'package:league_game/data/repositories/password_auth.dart';
 
 void main() {
-  late Auth auth;
+  late PasswordAuth auth;
 
   setUp(() {
-    auth = Auth();
+    auth = PasswordAuth();
   });
 
   test('auth-signin', () async {

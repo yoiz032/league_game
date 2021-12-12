@@ -40,6 +40,15 @@ dependencies:
   network_image_mock: ^2.0.1
   google_fonts: ^2.1.0
   firebase_database: ^8.2.0
+  firebase_core: ^1.10.5
+  firebase_auth: ^3.3.3
+  cloud_firestore: ^3.1.4
+  shared_preferences: ^2.0.11
+  permission_handler: ^8.3.0
+  geolocator: ^8.0.0
+  flutter_local_notifications: ^9.1.5
+  url_launcher: ^6.0.17
+  workmanager: ^0.4.1
 
 dev_dependencies:
   flutter_test:

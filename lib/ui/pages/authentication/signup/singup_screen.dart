@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:league_game/domain/use_cases/auth_management.dart';
 import 'package:league_game/domain/use_cases/controllers/authentication.dart';
 import 'package:league_game/domain/use_cases/controllers/connectivity.dart';
 
@@ -87,13 +86,13 @@ class _State extends State<SignUpScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (connectivityController.connected) {
-                        var result = await AuthManagement.signUp(
+                        controller.manager.signUp(
                             name: nameController.text,
                             email: emailController.text,
                             password: passwordController.text);
-                        controller.authenticated = result;
                       } else {
                         Get.showSnackbar(
+                          // ignore: deprecated_member_use
                           GetBar(
                             message: "No estas conectado a la red.",
                             duration: const Duration(seconds: 2),

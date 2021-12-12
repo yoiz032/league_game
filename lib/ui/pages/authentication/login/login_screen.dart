@@ -1,8 +1,7 @@
-import 'dart:developer';
+// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:league_game/domain/use_cases/auth_management.dart';
 import 'package:league_game/domain/use_cases/controllers/authentication.dart';
 import 'package:league_game/domain/use_cases/controllers/connectivity.dart';
 
@@ -81,16 +80,17 @@ class _State extends State<LoginScreen> {
                       // LUEGO DE VALIDAR EL ESTADO DE RED:
                       if (connectivityController.connected) {
                         // PERMITA LA AUTENTICACIÓN A LA APP SI SE DETECTA CONEXIÓN
-                        var result = await AuthManagement.signIn(
+                        await controller.manager.signIn(
                             email: emailController.text,
                             password: passwordController.text);
-                        controller.authenticated = result;
                       } else {
                         // MUESTRE UN SNACKBAR (notificación) INDICANDO QUE NO EXISTE CONEXIÓN
-                        Get.showSnackbar(GetBar(
-                          message: "no estas conectado",
-                          duration: const Duration(seconds: 2),
-                        ));
+                        Get.showSnackbar(
+                          GetBar(
+                            message: "No estas conectado a la red.",
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(

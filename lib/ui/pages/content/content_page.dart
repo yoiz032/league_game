@@ -37,11 +37,12 @@ class ContentPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
+        controller: controller,
         picUrl: 'https://uifaces.co/our-content/donated/gPZwCbdS.jpg',
-        tile: const Text("Red Egresados"),
+        tile: const Text("league game"),
         context: context,
         onSignOff: () {
-          authController.authenticated = false;
+          authController.manager.signOut();
         },
       ),
       body: SafeArea(

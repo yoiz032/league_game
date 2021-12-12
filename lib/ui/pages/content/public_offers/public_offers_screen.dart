@@ -48,6 +48,7 @@ class _State extends State<PublicOffersScreen> {
                 //releaseDate: game.releaseDate,
                 onApply: () => {
                   Get.showSnackbar(
+                    // ignore: deprecated_member_use
                     GetBar(
                       message: "Has seleccionado este juego.",
                       duration: const Duration(seconds: 2),
