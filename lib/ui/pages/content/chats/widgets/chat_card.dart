@@ -23,7 +23,8 @@ class ChatCard extends StatelessWidget {
     return Card(
       child: ListTile(
         dense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         leading: SizedBox(
           height: 42.0,
           width: 42.0,

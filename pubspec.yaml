@@ -49,6 +49,7 @@ dependencies:
   flutter_local_notifications: ^9.1.5
   url_launcher: ^6.0.17
   workmanager: ^0.4.1
+  loggy: ^2.0.1
 
 dev_dependencies:
   flutter_test:

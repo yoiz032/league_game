@@ -14,7 +14,7 @@ class VideogamesPoolService implements MisionTicService {
   Future<List<GameModel>> fecthData({int limit = 10, Map? map}) async {
     // Defina la URI para hacer las peticiones al servicio
     var queryParameters = {'limit': limit.toString()};
-    var uri = Uri.https(baseUrl, '/games', queryParameters);
+    var uri = Uri.https(baseUrl, '/api/games', queryParameters);
 
     // Implemente la solicitud
     final response = await http.get(uri, headers: <String, String>{
@@ -25,7 +25,7 @@ class VideogamesPoolService implements MisionTicService {
     if (response.statusCode == 200) {
       var res = json.decode(response.body);
       final List<GameModel> games = [];
-      for (var game in res['/api/games']) {
+      for (var game in res.take(limit)) {
         games.add(GameModel.fromJson(game));
       }
       return games;

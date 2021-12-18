@@ -18,7 +18,7 @@ class StateCard extends StatelessWidget {
   // Passing all the customizable views as parameters
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).colorScheme.onBackground;
+    Color primaryColor = Theme.of(context).colorScheme.primary;
     return AppCard(
       key: const Key("statusCard"),
       title: title,

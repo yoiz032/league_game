@@ -30,10 +30,12 @@ class OfferCard extends StatelessWidget {
     return AppCard(
       key: const Key("offerCard"),
       title: title,
-      content: Text(
-        thumbnail,
-        style: Theme.of(context).textTheme.bodyText1,
+      content: Image(
+        image: NetworkImage(
+          thumbnail,
+        ),
       ),
+
       // topRightWidget widget as an IconButton
       // topRightWidget: IconButton(
       //   icon: Icon(
@@ -49,12 +51,16 @@ class OfferCard extends StatelessWidget {
       //       ),
       //     );
       //   },
-      // ),
+      // ),    Image(image: NetworkImage(thumbnail)),
       // extraContent widget as a column that contains more details about the offer
       // and an extra action (onApply)
       extraContent: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            shortDescription,
+            style: Theme.of(context).textTheme.caption,
+          ),
           Row(
             children: [
               Padding(
@@ -72,27 +78,27 @@ class OfferCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(
-                  Icons.developer_mode_outlined,
+                  Icons.gamepad_outlined,
                   color: primaryColor,
                 ),
               ),
               Text(
-                shortDescription,
+                genre,
                 style: Theme.of(context).textTheme.caption,
               ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.payments_outlined,
-                  color: primaryColor,
-                ),
-              ),
-              Text(
-                publisher,
-                style: Theme.of(context).textTheme.caption,
-              ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Icon(
+              Icons.developer_mode_outlined,
+              color: primaryColor,
+            ),
+          ),
+          Text(
+            publisher,
+            style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(
             height: 8.0,

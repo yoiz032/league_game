@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:league_game/domain/use_cases/controllers/authentication.dart';
 import 'package:league_game/domain/use_cases/controllers/ui.dart';
+import 'package:league_game/ui/pages/content/chats/chat_screen.dart';
 import 'package:league_game/ui/pages/content/location/location_screen.dart';
 import 'package:league_game/ui/pages/content/public_offers/public_offers_screen.dart';
 import 'package:league_game/ui/pages/content/states/states_screen.dart';
@@ -19,9 +20,9 @@ class ContentPage extends StatelessWidget {
       case 2:
         return const PublicOffersScreen();
       case 3:
-        return const LocationScreen();
+        return LocationScreen();
       case 4:
-        return Container();
+        return const UserMessages();
       default:
         return const StatesScreen();
     }
@@ -59,7 +60,8 @@ class ContentPage extends StatelessWidget {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.lightbulb_outline_rounded,
+                  Icons
+                      .library_books_outlined, //library_books,lightbulb_outline_rounded
                   key: Key("statesSection"),
                 ),
                 label: 'Estados',
