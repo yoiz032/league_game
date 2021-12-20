@@ -50,6 +50,7 @@ dependencies:
   url_launcher: ^6.0.17
   workmanager: ^0.4.1
   loggy: ^2.0.1
+  prompt_dialog: ^1.0.7
 
 dev_dependencies:
   flutter_test:

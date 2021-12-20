@@ -5,7 +5,7 @@ import 'package:league_game/domain/use_cases/controllers/ui.dart';
 import 'package:league_game/ui/pages/content/chats/chat_screen.dart';
 import 'package:league_game/ui/pages/content/location/location_screen.dart';
 import 'package:league_game/ui/pages/content/public_offers/public_offers_screen.dart';
-import 'package:league_game/ui/pages/content/states/states_screen.dart';
+import 'package:league_game/ui/pages/content/states/user_status_page.dart';
 import 'package:league_game/ui/pages/content/users_offers/users_offers_screen.dart';
 import 'package:league_game/ui/widgets/appbar.dart';
 
@@ -24,7 +24,7 @@ class ContentPage extends StatelessWidget {
       case 4:
         return const UserMessages();
       default:
-        return const StatesScreen();
+        return const UserStatusPage();
     }
   }
 
