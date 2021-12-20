@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, duplicate_ignore
+
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,9 +20,11 @@ class StatusController extends GetxController {
     streamSubscription = _usersStream.listen((event) {
       logInfo('Got new item from fireStore');
       _records.clear();
+      // ignore: avoid_function_literals_in_foreach_calls
       event.docs.forEach((element) {
         _records.add(UserStatus.fromSnapshot(element));
       });
+      // ignore: avoid_print
       print('Got ${_records.length}');
     });
   }
@@ -47,6 +51,7 @@ class StatusController extends GetxController {
     record.reference.update({'message': record.message});
   }
 
+  // ignore: duplicate_ignore
   deleteEntry(UserStatus record) {
     if (FirebaseAuth.instance.currentUser!.email == record.email) {
       record.reference.delete();

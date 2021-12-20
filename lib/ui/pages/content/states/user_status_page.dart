@@ -36,7 +36,7 @@ class _FireStorePageState extends State<UserStatusPage> {
         body: Obx(
           () => ListView.builder(
               itemCount: statusController.entries.length,
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 15.0),
               itemBuilder: (BuildContext context, int index) {
                 return _buildItem(context, statusController.entries[index]);
               }),
@@ -52,7 +52,7 @@ class _FireStorePageState extends State<UserStatusPage> {
   Widget _buildItem(BuildContext context, UserStatus record) {
     return Padding(
       key: ValueKey(record.name),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -60,9 +60,24 @@ class _FireStorePageState extends State<UserStatusPage> {
         ),
         child: ListTile(
           title: Text(record.name),
-          trailing: Text(record.message.toString()),
-          onTap: () => statusController.updateEntry(record),
+          subtitle: Text(record.message.toString()),
           onLongPress: () => statusController.deleteEntry(record),
+          onTap: () => statusController.updateEntry(record),
+          leading: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+
+            child: Container(
+              width: 48,
+              height: 48,
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              alignment: Alignment.center,
+              child: const CircleAvatar(),
+            ),
+            // leading: const FlutterLogo(),
+            // subtitle: Text(record.message.toString()),
+            // onTap: () => statusController.updateEntry(record),
+            // onLongPress: () => statusController.deleteEntry(record),
+          ),
         ),
       ),
     );

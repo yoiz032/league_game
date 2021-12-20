@@ -56,7 +56,12 @@ class _State extends State<UserMessages> {
             },
           );
         } else if (snapshot.hasError) {
-          return Text('Something went wrong: ${snapshot.error}');
+          return Center(
+            child: Text(snapshot.error.toString(),
+                style: const TextStyle(
+                  backgroundColor: Colors.red,
+                )),
+          );
         }
 
         // By default, show a loading spinner.
