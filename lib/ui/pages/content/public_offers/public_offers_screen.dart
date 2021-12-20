@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:league_game/data/services/videogames_pool.dart';
 import 'package:league_game/domain/models/game_model.dart';
 import 'package:league_game/domain/use_cases/controllers/connectivity.dart';
-
 import 'widgets/offer_card.dart';
 
 class PublicOffersScreen extends StatefulWidget {

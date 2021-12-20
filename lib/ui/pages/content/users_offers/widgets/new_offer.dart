@@ -73,7 +73,6 @@ class _State extends State<PublishOffer> {
                               _buttonDisabled = true;
                               User user = controller.currentUser!;
                               UserJob offer = UserJob(
-                                picUrl: user.photoURL!,
                                 name: user.displayName!,
                                 email: user.email!,
                                 message: offerController.text,
