@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:league_game/domain/models/user_status_model.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
@@ -47,6 +48,10 @@ class StatusController extends GetxController {
   }
 
   deleteEntry(UserStatus record) {
-    record.reference.delete();
+    if (FirebaseAuth.instance.currentUser!.email == record.email) {
+      record.reference.delete();
+    }
+    // ignore: avoid_print
+    print("Failed to delete Stantus");
   }
 }
