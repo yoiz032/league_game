@@ -51,6 +51,9 @@ dependencies:
   workmanager: ^0.4.1
   loggy: ^2.0.1
   prompt_dialog: ^1.0.7
+  uuid: ^3.0.5
+  image_picker: ^0.8.4+4
+  firebase_storage: ^10.2.4
 
 dev_dependencies:
   flutter_test:

@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:league_game/domain/models/chat.dart';
-import 'package:league_game/domain/models/user.dart';
-import 'package:league_game/domain/use_cases/chat_management.dart';
-import 'package:league_game/domain/use_cases/controllers/authentication.dart';
-import 'package:league_game/ui/pages/chat/chat_page.dart';
-import 'package:league_game/ui/pages/content/chats/widgets/chat_card.dart';
+import 'package:league_game/ui/pages/chat/group_chats/group_chat_screen.dart';
+import 'package:league_game/ui/pages/content/chats/ChatRoom.dart';
 
 class UserMessages extends StatefulWidget {
   const UserMessages({Key? key}) : super(key: key);
@@ -15,58 +11,150 @@ class UserMessages extends StatefulWidget {
   _State createState() => _State();
 }
 
-class _State extends State<UserMessages> {
-  late AuthController controller;
-  late final ChatManager manager;
-  late Stream<QuerySnapshot<Map<String, dynamic>>> chatsStream;
+class _State extends State<UserMessages> with WidgetsBindingObserver {
+  Map<String, dynamic>? userMap;
+  bool isLoading = false;
+  final TextEditingController _search = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    manager = ChatManager();
-    controller = Get.find<AuthController>();
-    chatsStream = manager.getChatList(controller.currentUser!.email!);
+    WidgetsBinding.instance!.addObserver(this);
+    setStatus("Online");
+  }
+
+  void setStatus(String status) async {
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+      "status": status,
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // online
+      setStatus("Online");
+    } else {
+      // offline
+      setStatus("Offline");
+    }
+  }
+
+  String chatRoomId(String user1, String user2) {
+    if (user1[0].toLowerCase().codeUnits[0] >
+        user2.toLowerCase().codeUnits[0]) {
+      return "$user1$user2";
+    } else {
+      return "$user2$user1";
+    }
+  }
+
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    setState(() {
+      isLoading = true;
+    });
+    await _firestore
+        .collection('users')
+        .where("email", isEqualTo: _search.text)
+        .get()
+        .then((value) {
+      setState(() {
+        userMap = value.docs[0].data();
+        isLoading = false;
+      });
+      print(userMap);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: chatsStream,
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-        if (snapshot.hasData) {
-          final items = manager.extractChats(snapshot.data!);
-          return ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              Chat chat = items[index];
-              ChatUser user =
-                  chat.getTargetUser(controller.currentUser!.email!);
-              return ChatCard(
-                pictureUrl: user.pictureUrl,
-                name: user.name,
-                message: chat.lastMessage.message,
-                time: chat.lastMessage.timestamp!,
-                onTap: () {
-                  Get.to(
-                    () => ChatPage(chat: chat),
-                  );
-                },
-              );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text(snapshot.error.toString(),
-                style: const TextStyle(
-                  backgroundColor: Colors.red,
-                )),
-          );
-        }
+    final size = MediaQuery.of(context).size;
 
-        // By default, show a loading spinner.
-        return const Center(child: CircularProgressIndicator());
-      },
+    return Scaffold(
+      body: isLoading
+          ? Center(
+              child: Container(
+                height: size.height / 20,
+                width: size.height / 20,
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : Column(
+              children: [
+                SizedBox(
+                  height: size.height / 20,
+                ),
+                Container(
+                  height: size.height / 14,
+                  width: size.width,
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: size.height / 14,
+                    width: size.width / 1.15,
+                    child: TextField(
+                      controller: _search,
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height / 50,
+                ),
+                ElevatedButton(
+                  onPressed: onSearch,
+                  child: Text("Search"),
+                ),
+                SizedBox(
+                  height: size.height / 30,
+                ),
+                userMap != null
+                    ? ListTile(
+                        onTap: () {
+                          String roomId = chatRoomId(
+                              _auth.currentUser!.displayName!,
+                              userMap!['name']);
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ChatRoom(
+                                chatRoomId: roomId,
+                                userMap: userMap!,
+                              ),
+                            ),
+                          );
+                        },
+                        leading: Icon(Icons.account_box, color: Colors.black),
+                        title: Text(
+                          userMap!['name'],
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        subtitle: Text(userMap!['email']),
+                        trailing: Icon(Icons.chat, color: Colors.black),
+                      )
+                    : Container(),
+              ],
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.group),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => GroupChatHomeScreen(),
+          ),
+        ),
+      ),
     );
   }
 }
